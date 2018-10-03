@@ -3,7 +3,6 @@ require 'spec_helper'
 require 'database_cleaner'
 require_relative './support/factory_bot'
 
-
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production
@@ -77,7 +76,7 @@ RSpec.configure do |config|
   end
 
   # start the transaction strategy as examples are run
-  config.around(:each) do |example|
+  config.around do |example|
     DatabaseCleaner.cleaning do
       example.run
     end
