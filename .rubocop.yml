@@ -1,0 +1,44 @@
+inherit_from: .rubocop_todo.yml
+AllCops:
+  Exclude:
+    - "lib/tasks/**/*"
+    - "log/**/*"
+    - "tmp/**/*"
+    - "spec/tmp/**/*"
+    - "public/**/*"
+    - "vendor/**/*"
+    - "gems/**/*"
+    - "scripts/**/*"
+    - "db/schema.rb"
+    - "db/migrate/**/*"
+  TargetRubyVersion: 2.3
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+Layout/IndentArray:
+  EnforcedStyle: consistent
+Layout/IndentHash:
+  EnforcedStyle: consistent
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+Layout/CaseIndentation:
+  EnforcedStyle: end
+  IndentOneStep: false
+Layout/MultilineOperationIndentation:
+  Enabled: false
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - "spec/**/*"
+Metrics/BlockLength:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Style/GuardClause:
+  Enabled: false
+Style/IfUnlessModifier:
+  Enabled: false
+Style/NumericPredicate:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Bundler/OrderedGems:
+  Enabled: false
