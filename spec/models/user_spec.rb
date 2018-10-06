@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   # Association test
   it { is_expected.to belong_to(:role) }
+  it { is_expected.to have_many(:albums).with_foreign_key('user_id') }
 
   # Validation tests
   it { is_expected.to validate_presence_of(:first_name) }
