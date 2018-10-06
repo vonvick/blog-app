@@ -1,6 +1,8 @@
-module Auth
-  module V1
-    class RegistrationsController < Devise::RegistrationsController
+module V1
+  module Auth
+    class RegistrationsController < DeviseTokenAuth::RegistrationsController
+      # skip_before_action :authenticate_user!
+
       private
 
       def account_update_params
