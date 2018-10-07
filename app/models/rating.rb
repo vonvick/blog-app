@@ -7,13 +7,9 @@ class Rating < ApplicationRecord
   UNRATED   = 0
 
   belongs_to :rateable, polymorphic: true
+  belongs_to :created_by, class_name: 'User', foreign_key: 'user_id'
 
-  enum rating_score: { excellent: EXCELLENT,
-                       very_good: VERY_GOOD,
-                       good: GOOD,
-                       fair: FAIR,
-                       poor: POOR,
-                       unrated: UNRATED }
+  enum rating_score: [UNRATED, POOR, FAIR, GOOD, VERY_GOOD, EXCELLENT]
 
   validates_presence_of :rating_score
 end

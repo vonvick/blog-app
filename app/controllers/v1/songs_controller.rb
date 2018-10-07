@@ -1,2 +1,3 @@
-class V1::SongsController < ApplicationController
+module V1
+  class SongsController < ApplicationController; end
 end
