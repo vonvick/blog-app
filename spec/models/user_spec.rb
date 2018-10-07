@@ -16,7 +16,7 @@ RSpec.describe User, type: :model do
     let(:admin_user) { FactoryBot.create(:user, role: admin_role) }
 
     it 'successfully creates a user' do
-      expect(admin_user.role_id).to eq(admin_user.id)
+      expect(admin_user.role_id).to eq(admin_role.id)
     end
   end
 end
