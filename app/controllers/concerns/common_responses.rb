@@ -32,5 +32,9 @@ module Concerns
     def not_found
       { status: 404, json: { success: false, message: 'Not Found' } }
     end
+
+    def unprocessable_entity_error(status: :unprocessable_entity, success: false, message: 'could not process')
+      { status: status, json: { success: success, message: message } }
+    end
   end
 end

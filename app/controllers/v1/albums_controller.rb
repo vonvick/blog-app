@@ -26,21 +26,25 @@ module V1
     end
 
     def update
-      @album.update_attributes(album_params)
-
-      render custom_success_response(data: @album)
+      if @album.update_attributes(album_params)
+        render custom_success_response(data: @album)
+      else
+        render unprocessable_entity_error
+      end
     end
 
     def destroy
-      @album.destroy
-
-      render custom_success_response(data: 'Album successfully deleted')
+      if @album.destroy
+        render custom_success_response(data: 'Album successfully deleted')
+      else
+        render unprocessable_entity_error
+      end
     end
 
     private
 
     def album_params
-      params.require(:article).permit(:title, :description, :year, :artist)
+      params.require(:album).permit(:title, :description, :year, :artist)
     end
 
     def find_album_by_slug
