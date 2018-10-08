@@ -10,7 +10,6 @@ module V1
       else
         render custom_error(message: 'An Error occurred while setting rating')
       end
-
     end
 
     def destroy
