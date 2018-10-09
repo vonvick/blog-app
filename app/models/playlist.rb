@@ -5,13 +5,35 @@ class Playlist < ApplicationRecord
 
   validates_presence_of :title, :description
 
-  # class << self
-  #   def save_playlist(params)
-  #     new_album = new(params)
-  #
-  #     new_album.save
-  #
-  #     new_album
-  #   end
-  # end
+  scope :owned_by, ->(user, playlist_id) { where(owner: user, id: playlist_id) }
+  scope :user_playlist, ->(user) { where(owner: user) }
+
+  class << self
+    def create_playlist(params)
+      new_playlist = new(params)
+
+      new_playlist.save
+
+      new_playlist
+    end
+
+    def add_songs_to_playlist(playlist_object)
+      playlist = find_by(id: playlist_object[:id])
+      playlist.songs = playlist_object[:songs]
+
+      playlist.save
+
+      playlist
+    end
+
+    def remove_songs_to_playlist(playlist_object)
+      song_ids = playlist_object[:songs].pluck(:id)
+      playlist = find_by(id: playlist_object[:id])
+      playlist.song_ids = playlist.song_ids - song_ids
+
+      playlist.save
+
+      playlist
+    end
+  end
 end

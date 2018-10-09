@@ -12,5 +12,13 @@ Rails.application.routes.draw do
       put '/:rateable_type/ratings' => 'ratings#edit_ratings_resource'
     end
     resources :ratings, only: [:destroy]
+    resources :playlist do
+      collection do
+        get '/user/:user_id' => 'playlist#user_playlists'
+        put '/add_song/:id' => 'playlist#add_songs'
+        delete '/remove_song/:id' => 'playlist#remove_songs'
+        put '/:id/ratings' => 'ratings#edit_ratings_resource'
+      end
+    end
   end
 end

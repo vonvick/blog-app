@@ -57,10 +57,13 @@ describe V1::SongsController, type: :request do
 
     it 'sets a rating for the song' do
       put "/v1/songs/#{new_song.id}/song/ratings",
-          params: { song: { rating_score: 3, id: new_song.id } }.to_json,
+          params: { rating: { rating_score: 3, rateable_id: new_song.id, rateable_type: 'song' } }.to_json,
           headers: headers
 
+      # binding.pry
+
       expect(response).to have_http_status(:ok)
+      expect(json[:data][:rating_score]).to eq('good')
     end
 
     it 'gets all songs created' do

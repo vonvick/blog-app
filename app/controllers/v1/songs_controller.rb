@@ -50,9 +50,7 @@ module V1
     def find_song_by_slug
       @song = Song.find_by_id(params[:id])
 
-      return render json: not_found if @song.nil?
-
-      @song
+      render json: not_found if @song.nil?
     end
 
     def find_album
