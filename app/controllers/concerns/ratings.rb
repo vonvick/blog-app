@@ -3,7 +3,6 @@ module Concerns
     extend ActiveSupport::Concern
 
     def rateable_class
-      # binding.pry
       rateable = params[:rating][:rateable_type].capitalize.constantize
       rateable&.find_by_id(params[:rating][:rateable_id])
     end
