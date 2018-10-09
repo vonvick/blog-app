@@ -1,6 +1,7 @@
 module V1
   class SongsController < ApplicationController
     before_action :find_song_by_slug, only: [:show, :update, :destroy]
+    before_action :find_album, only: [:create, :update]
 
     def index
       @songs = Song.all
@@ -9,14 +10,11 @@ module V1
     end
 
     def create
-      @song = Song.new(song_params)
-      @song.created_by = current_user
+      @song = Song.save_song(song_params)
 
-      if @song.save
-        render custom_success_response(data: @song)
-      else
-        render custom_error(message: @song.errors)
-      end
+      return render custom_error(message: 'Could not create song') if @song.nil?
+
+      render custom_success_response(status: :created, data: @song)
     end
 
     def show
@@ -44,7 +42,9 @@ module V1
     private
 
     def song_params
-      params.require(:song).permit(:title, :track, :genre, :artist, :album_id)
+      params.require(:song)
+        .permit(:title, :track, :genre, :artist, :album_id)
+        .merge(created_by: current_user, album: find_album)
     end
 
     def find_song_by_slug
@@ -53,6 +53,10 @@ module V1
       return render json: not_found if @song.nil?
 
       @song
+    end
+
+    def find_album
+      Album.find_by_id(params[:song][:album_id])
     end
   end
 end

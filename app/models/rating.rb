@@ -24,14 +24,12 @@ class Rating < ApplicationRecord
     def update_rating_score(rating_object)
       rating = find_or_initialize_by(
         created_by: rating_object[:created_by],
-        rateable_id: rating_object[:rateable_id],
-        rateable_type: rating_object[:rateable_type].to_s
+        rateable: rating_object[:rateable]
       )
 
       rating.rating_score = rating_object[:rating_score]
       rating.created_by = rating_object[:created_by]
-      rating.rateable_type = rating_object[:rateable_type]
-      rating.rateable_id = rating_object[:rateable_id]
+      rating.rateable = rating_object[:rateable_type]
       rating.save
 
       rating

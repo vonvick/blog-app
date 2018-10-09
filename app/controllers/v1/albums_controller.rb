@@ -9,14 +9,11 @@ module V1
     end
 
     def create
-      @album = Album.new(album_params)
-      @album.created_by = current_user
+      @album = Album.save_album(album_params)
 
-      if @album.save
-        render custom_success_response(data: @album)
-      else
-        render custom_error(message: 'An Error occurred while creating the album')
-      end
+      return render custom_error(message: 'An Error occurred while creating the album') if @album.nil?
+
+      render custom_success_response(status: :created, data: @album)
     end
 
     def show
@@ -44,7 +41,9 @@ module V1
     private
 
     def album_params
-      params.require(:album).permit(:title, :description, :year, :artist)
+      params.require(:album)
+        .permit(:title, :description, :year, :artist)
+        .merge(created_by: current_user)
     end
 
     def find_album_by_slug

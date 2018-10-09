@@ -2,7 +2,7 @@ module V1
   class RatingsController < ApplicationController
     include Concerns::Ratings
 
-    before_action :prepare_ratings_object, only:[:edit_ratings_resource]
+    before_action :prepare_ratings_object, only: [:edit_ratings_resource]
 
     def edit_ratings_resource
       @rating = Rating.update_rating_score(prepare_ratings_object)
@@ -27,8 +27,7 @@ module V1
     def prepare_ratings_object
       {
         created_by: current_user,
-        rateable_id: params[:id],
-        rateable_type: rateable_class,
+        rateable: rateable_class,
         rating_score: params[:rating_score]
       }
     end
