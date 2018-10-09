@@ -9,13 +9,13 @@ describe V1::PlaylistController, type: :request do
   end
   let!(:album) { FactoryBot.create(:album, created_by: user) }
   let!(:songs) { FactoryBot.create_list(:song, 5, created_by: user, album: album) }
-  let(:song_ids) { songs.pluck(:id)}
+  let(:song_ids) { songs.pluck(:id) }
 
   let(:playlist_params) do
     {
       playlist: {
         title: 'My first playlist',
-        description: 'A playlist of Nigerian songs',
+        description: 'A playlist of Nigerian songs'
       }
     }.to_json
   end
@@ -110,7 +110,11 @@ describe V1::PlaylistController, type: :request do
 
     it 'sets a rating for a playlist' do
       put "/v1/playlist/#{third_playlist.id}/ratings",
-          params: { rating: { rating_score: 3, rateable_id: third_playlist.id, rateable_type: 'playlist' } }.to_json,
+          params: {
+            rating: {
+              rating_score: 3, rateable_id: third_playlist.id, rateable_type: 'playlist'
+            }
+          }.to_json,
           headers: headers
 
       expect(response).to have_http_status(:ok)
