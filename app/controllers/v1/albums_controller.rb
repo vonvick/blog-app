@@ -5,12 +5,12 @@ module V1
     def index
       @albums = Album.all
 
-      render custom_response(message: @albums)
+      render custom_success_response(data: @albums)
     end
 
     def create
       @album = Album.new(album_params)
-      @album.user = current_user
+      @album.created_by = current_user
 
       if @album.save
         render custom_success_response(data: @album)
@@ -20,9 +20,9 @@ module V1
     end
 
     def show
-      render custom_success_response(data: @album) if @album.present?
+      return render json: not_found if @album.nil?
 
-      render json: not_found
+      render custom_success_response(data: @album)
     end
 
     def update
@@ -48,7 +48,11 @@ module V1
     end
 
     def find_album_by_slug
-      @album = Album.find_by_title(params[:title])
+      @album = Album.find_by_id(params[:id])
+
+      return render json: not_found if @album.nil?
+
+      @album
     end
   end
 end

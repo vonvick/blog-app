@@ -9,31 +9,40 @@ class Rating < ApplicationRecord
   belongs_to :rateable, polymorphic: true
   belongs_to :created_by, class_name: 'User', foreign_key: 'user_id'
 
-  enum rating_score: [UNRATED, POOR, FAIR, GOOD, VERY_GOOD, EXCELLENT]
+  enum rating_score: {
+    unrated: UNRATED,
+    poor: POOR,
+    fair: FAIR,
+    good: GOOD,
+    very_good: VERY_GOOD,
+    excellent: EXCELLENT
+  }
 
   validates_presence_of :rating_score
 
   class << self
     def update_rating_score(rating_object)
       rating = find_or_initialize_by(
-        user_id: rating_object[:user_id],
+        created_by: rating_object[:created_by],
         rateable_id: rating_object[:rateable_id],
-        rateable_type: rating_object[:type]
+        rateable_type: rating_object[:rateable_type].to_s
       )
 
       rating.rating_score = rating_object[:rating_score]
-
+      rating.created_by = rating_object[:created_by]
+      rating.rateable_type = rating_object[:rateable_type]
+      rating.rateable_id = rating_object[:rateable_id]
       rating.save
+
+      rating
     end
 
-    def delete_rating_resource(rating_object)
-      rating = find_by(id: rating_object[:id])
+    def delete_rating_resource(rating_id)
+      rating = find_by(id: rating_id)
 
       if rating.present?
         rating.rating_score = UNRATED
         rating.save
-      else
-        error.add(:id, 'Could not find rating for this resource by this user')
       end
     end
   end

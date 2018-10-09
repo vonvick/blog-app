@@ -5,10 +5,12 @@ Rails.application.routes.draw do
   }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :v1, defaults: { format: :json } do
-    resources :albums
-    resources :songs
-    resources :ratings, only: [:destroy] do
-      put :set_ratings_resource
+    resources :albums do
+      put '/:rateable_type/ratings' => 'ratings#edit_ratings_resource'
     end
+    resources :songs do
+      put '/:rateable_type/ratings' => 'ratings#edit_ratings_resource'
+    end
+    resources :ratings, only: [:destroy]
   end
 end
