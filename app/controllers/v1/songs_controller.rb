@@ -1,32 +1,30 @@
 module V1
   class SongsController < ApplicationController
     before_action :find_song_by_slug, only: [:show, :update, :destroy]
+    before_action :find_album, only: [:create, :update]
 
     def index
       @songs = Song.all
 
-      render custom_response(message: @songs)
+      render custom_success_response(data: @songs)
     end
 
     def create
-      @song = Song.new(album_params)
-      @song.user = current_user
+      @song = Song.save_song(song_params)
 
-      if @song.save
-        render custom_success_response(data: @song)
-      else
-        render custom_error(message: 'An Error occurred while creating the song')
-      end
+      return render custom_error(message: 'Could not create song') if @song.nil?
+
+      render custom_success_response(status: :created, data: @song)
     end
 
     def show
-      render custom_success_response(data: @song) if @song.present?
+      return render json: not_found if @song.nil?
 
-      render json: not_found
+      render custom_success_response(data: @song) if @song.present?
     end
 
     def update
-      if @song.update_attributes(album_params)
+      if @song.update_attributes(song_params)
         render custom_success_response(data: @song)
       else
         render unprocessable_entity_error
@@ -44,11 +42,21 @@ module V1
     private
 
     def song_params
-      params.require(:song).permit(:title, :track, :genre, :artist, album: [])
+      params.require(:song)
+        .permit(:title, :track, :genre, :artist, :album_id)
+        .merge(created_by: current_user, album: find_album)
     end
 
     def find_song_by_slug
-      @song = Song.find_by_title(params[:title])
+      @song = Song.find_by_id(params[:id])
+
+      return render json: not_found if @song.nil?
+
+      @song
+    end
+
+    def find_album
+      Album.find_by_id(params[:song][:album_id])
     end
   end
 end

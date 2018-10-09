@@ -15,7 +15,7 @@ FactoryBot.define do
       rank { 3 }
     end
 
-    trait :user do
+    trait :user_role do
       title { 'user' }
       rank { 4 }
     end

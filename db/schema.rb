@@ -46,9 +46,9 @@ ActiveRecord::Schema.define(version: 20181006152950) do
 
   create_table "songs", force: :cascade do |t|
     t.string "title"
-    t.text "track"
+    t.integer "track"
     t.string "artist"
-    t.integer "genre"
+    t.string "genre"
     t.integer "play_count", default: 0
     t.bigint "album_id"
     t.bigint "user_id"

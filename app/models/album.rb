@@ -4,4 +4,14 @@ class Album < ApplicationRecord
   has_many :songs
 
   validates_presence_of :title, :description, :artist, :year
+
+  class << self
+    def save_album(params)
+      new_album = new(params)
+
+      new_album.save
+
+      new_album
+    end
+  end
 end

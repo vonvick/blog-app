@@ -4,4 +4,14 @@ class Song < ApplicationRecord
   has_many :ratings, as: :rateable
 
   validates_presence_of :title, :track, :artist, :genre, :play_count
+
+  class << self
+    def save_song(params)
+      new_song = new(params)
+
+      new_song.save
+
+      new_song
+    end
+  end
 end
