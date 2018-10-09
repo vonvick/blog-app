@@ -3,8 +3,8 @@ module Concerns
     extend ActiveSupport::Concern
 
     def rateable_class
-      rateable = params[:rateable_type].capitalize.constantize
-      rateable&.find_by_id(params[:rateable_id])
+      rateable = params[:rating][:rateable_type].capitalize.constantize
+      rateable&.find_by_id(params[:rating][:rateable_id])
     end
   end
 end

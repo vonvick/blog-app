@@ -3,6 +3,7 @@
 class User < ActiveRecord::Base
   belongs_to :role, foreign_key: 'role_id'
   has_many :albums, foreign_key: 'user_id'
+  has_many :playlists, foreign_key: 'user_id'
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

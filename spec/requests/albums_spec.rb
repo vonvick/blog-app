@@ -53,10 +53,11 @@ describe V1::AlbumsController, type: :request do
 
     it 'sets a rating for the album' do
       put "/v1/albums/#{new_album.id}/album/ratings",
-          params: { album: { rating_score: 3, id: new_album.id } }.to_json,
+          params: { rating: { rating_score: 3, rateable_id: new_album.id, rateable_type: 'album' } }.to_json,
           headers: headers
 
       expect(response).to have_http_status(:ok)
+      expect(json[:data][:rating_score]).to eq('good')
     end
 
     it 'gets all album created' do

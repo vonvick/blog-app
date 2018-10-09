@@ -49,9 +49,7 @@ module V1
     def find_album_by_slug
       @album = Album.find_by_id(params[:id])
 
-      return render json: not_found if @album.nil?
-
-      @album
+      render json: not_found if @album.nil?
     end
   end
 end

@@ -3,6 +3,7 @@ module V1
     include Concerns::Ratings
 
     before_action :prepare_ratings_object, only: [:edit_ratings_resource]
+    before_action :ratings_params, only: [:edit_ratings_resource]
 
     def edit_ratings_resource
       @rating = Rating.update_rating_score(prepare_ratings_object)
@@ -24,11 +25,15 @@ module V1
 
     private
 
+    def ratings_params
+      params.require(:rating).permit(:rating_score, :rateable_type, :rateable_id)
+    end
+
     def prepare_ratings_object
       {
         created_by: current_user,
         rateable: rateable_class,
-        rating_score: params[:rating_score]
+        rating_score: params[:rating][:rating_score]
       }
     end
   end
