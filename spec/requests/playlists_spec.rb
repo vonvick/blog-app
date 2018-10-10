@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe V1::PlaylistController, type: :request do
-  let!(:role) { FactoryBot.create(:role, :super_admin) }
+  let!(:role) { FactoryBot.create(:role, :admin) }
   let!(:normal_role) { FactoryBot.create(:role, :user_role) }
   let(:user) { FactoryBot.create(:user, email: 'victor@example.com', password: 'password', role: role) }
   let(:second_user) do
@@ -109,6 +109,7 @@ describe V1::PlaylistController, type: :request do
     end
 
     it 'sets a rating for a playlist' do
+      # binding.pry
       put "/v1/playlist/#{third_playlist.id}/ratings",
           params: {
             rating: {
@@ -116,6 +117,8 @@ describe V1::PlaylistController, type: :request do
             }
           }.to_json,
           headers: headers
+
+      # binding.pry
 
       expect(response).to have_http_status(:ok)
       expect(json[:data][:rating_score]).to eq('good')

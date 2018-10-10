@@ -10,7 +10,7 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration[5.1]
       t.string   :image_url
       t.text     :description
       t.string   :headline
-      t.references :role, foreign_key: true
+      t.references :role, foreign_key: true, default: 3
 
       ## Required
       t.string :provider, :null => false, :default => "email"

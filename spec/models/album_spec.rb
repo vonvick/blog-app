@@ -12,7 +12,7 @@ RSpec.describe Album, type: :model do
   it { is_expected.to validate_presence_of(:year) }
 
   describe 'when creating' do
-    let!(:admin_role) { FactoryBot.create(:role, :super_admin) }
+    let!(:admin_role) { FactoryBot.create(:role, :admin) }
     let!(:admin_user) { FactoryBot.create(:user, role: admin_role) }
     let!(:new_album) { FactoryBot.create(:album, created_by: admin_user) }
     let!(:album_rating) { FactoryBot.create(:rating, rateable: new_album, created_by: admin_user) }

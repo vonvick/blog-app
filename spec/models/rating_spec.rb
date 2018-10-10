@@ -10,7 +10,7 @@ RSpec.describe Rating, type: :model do
 
   describe 'when creating' do
     subject { Rating }
-    let!(:admin_role) { FactoryBot.create(:role, :super_admin) }
+    let!(:admin_role) { FactoryBot.create(:role, :admin) }
     let!(:admin_user) { FactoryBot.create(:user, role: admin_role) }
     let!(:new_album) { FactoryBot.create(:album, created_by: admin_user) }
     let!(:album_rating) { FactoryBot.create(:rating, rateable: new_album, created_by: admin_user) }

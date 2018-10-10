@@ -4,7 +4,7 @@ module V1
       skip_before_action :authenticate_user!, only: [:create]
 
       def create
-        render json: { data: @resource }
+        super
       end
     end
   end

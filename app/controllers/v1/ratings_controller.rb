@@ -1,11 +1,14 @@
 module V1
   class RatingsController < ApplicationController
+    load_and_authorize_resource 'Rating'
+    skip_authorize_resource only: [:edit_ratings_resource]
     include Concerns::Ratings
 
     before_action :prepare_ratings_object, only: [:edit_ratings_resource]
     before_action :ratings_params, only: [:edit_ratings_resource]
 
     def edit_ratings_resource
+      authorize! :rate, params[:rating][:rateable_type].to_sym
       @rating = Rating.update_rating_score(prepare_ratings_object)
 
       if @rating

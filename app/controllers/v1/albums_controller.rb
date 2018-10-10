@@ -1,5 +1,6 @@
 module V1
   class AlbumsController < ApplicationController
+    load_and_authorize_resource class: 'Album'
     before_action :find_album_by_slug, only: [:show, :update, :destroy]
 
     def index

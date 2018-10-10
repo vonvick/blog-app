@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe V1::RatingsController, type: :request do
-  let!(:role) { FactoryBot.create(:role, :super_admin) }
+  let!(:role) { FactoryBot.create(:role, :admin) }
   let!(:normal_role) { FactoryBot.create(:role, :user_role) }
   let(:user) { FactoryBot.create(:user, email: 'victor@example.com', password: 'password', role: role) }
   let(:second_user) do

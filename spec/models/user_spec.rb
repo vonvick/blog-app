@@ -12,11 +12,11 @@ RSpec.describe User, type: :model do
   it { is_expected.to validate_presence_of(:password) }
 
   describe 'when creating' do
-    let!(:admin_role) { FactoryBot.create(:role, :super_admin) }
-    let(:admin_user) { FactoryBot.create(:user, role: admin_role) }
+    let!(:admin_role) { FactoryBot.create(:role, :admin) }
+    let!(:admin_user) { FactoryBot.create(:user, role: admin_role) }
 
     it 'successfully creates a user' do
-      expect(admin_user.role_id).to eq(admin_role.id)
+      expect(admin_user.role.id).to eq(admin_role.id)
     end
   end
 end
