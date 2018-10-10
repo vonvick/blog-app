@@ -15,8 +15,8 @@ class Ability
   def manager_abilities(user)
     user_abilities(user)
     can :see, :all
-    can [:delete], Song
-    can [:delete], Album
+    can [:update], Song
+    can [:update], Album
   end
 
   def user_abilities(user)

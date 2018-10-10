@@ -1,6 +1,7 @@
 module V1
   class RatingsController < ApplicationController
-    load_and_authorize_resource :rating_class, parent: false
+    load_and_authorize_resource 'Rating'
+    skip_authorize_resource only: [:edit_ratings_resource]
     include Concerns::Ratings
 
     before_action :prepare_ratings_object, only: [:edit_ratings_resource]
