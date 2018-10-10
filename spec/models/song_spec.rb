@@ -13,7 +13,7 @@ RSpec.describe Song, type: :model do
   it { is_expected.to validate_presence_of(:play_count) }
 
   describe 'when creating' do
-    let!(:admin_role) { FactoryBot.create(:role, :super_admin) }
+    let!(:admin_role) { FactoryBot.create(:role, :admin) }
     let!(:admin_user) { FactoryBot.create(:user, role: admin_role) }
     let!(:new_album) { FactoryBot.create(:album, created_by: admin_user) }
     let!(:new_song) { FactoryBot.create(:song, created_by: admin_user, album: new_album) }

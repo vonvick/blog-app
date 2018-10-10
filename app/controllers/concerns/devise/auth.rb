@@ -10,7 +10,6 @@ module Concerns
           :password,
           :password_confirmation,
           :remember_me,
-          :role_id,
           :first_name,
           :last_name,
           :uid

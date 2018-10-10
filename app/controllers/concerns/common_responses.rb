@@ -25,8 +25,8 @@ module Concerns
       { status: 500, json: { message: 'Server Error' } }
     end
 
-    def forbidden
-      { status: 403, json: { success: false, message: 'Forbidden' } }
+    def forbidden(message)
+      { status: 403, json: { success: false, message: message } }
     end
 
     def not_found

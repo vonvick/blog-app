@@ -1,5 +1,6 @@
 module V1
   class PlaylistController < ApplicationController
+    load_and_authorize_resource class: 'Playlist'
     before_action :find_playlist_by_slug, only: [:show, :update, :destroy]
     before_action :check_playlist_owner, only: [:update, :destroy, :add_song, :remove_song]
 

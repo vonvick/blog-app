@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::AlbumsController, type: :request do
   let(:url) { '/v1/albums' }
-  let!(:role) { FactoryBot.create(:role, :super_admin) }
+  let!(:role) { FactoryBot.create(:role, :admin) }
   let(:user) { FactoryBot.create(:user, email: 'victor@example.com', password: 'password', role: role) }
   let(:album_params) do
     {

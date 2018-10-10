@@ -1,5 +1,6 @@
 module V1
   class SongsController < ApplicationController
+    load_and_authorize_resource class: 'Song'
     before_action :find_song_by_slug, only: [:show, :update, :destroy]
     before_action :find_album, only: [:create, :update]
 
