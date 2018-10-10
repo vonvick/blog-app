@@ -9,13 +9,11 @@ gem "active_model_serializers"
 gem 'cancancan'
 gem 'devise_token_auth'
 gem 'dotenv-rails'
-# gem 'jbuilder', '~> 2.5'
 gem 'pg'
 gem 'puma', '~> 3.11'
 gem 'rails', '~> 5.1.0'
 gem 'rack-cors'
 gem 'rubocop-rspec'
-# gem 'sass-rails', '~> 5.0'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'uglifier', '>= 1.3.0'
 
