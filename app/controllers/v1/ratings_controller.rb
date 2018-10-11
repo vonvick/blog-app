@@ -11,7 +11,7 @@ module V1
       authorize! :rate, params[:rating][:rateable_type].to_sym
       @rating = Rating.update_rating_score(prepare_ratings_object)
 
-      return custom_error(@rating) unless  @rating
+      return custom_error(@rating) unless @rating
 
       custom_success_response(@rating)
     end
