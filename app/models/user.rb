@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   belongs_to :role, foreign_key: 'role_id', optional: true
   has_many :albums, foreign_key: 'user_id'
   has_many :playlists, foreign_key: 'user_id'
+  has_many :songs, foreign_key: 'user_id'
 
   before_create :default_role
 

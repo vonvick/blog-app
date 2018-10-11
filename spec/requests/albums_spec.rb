@@ -48,7 +48,7 @@ describe V1::AlbumsController, type: :request do
       put "/v1/albums/#{new_album.id}", params: { album: { title: '8th Mile' } }.to_json, headers: headers
 
       expect(response).to have_http_status(:ok)
-      expect(json[:data][:title]).to eq('8th Mile')
+      expect(json[:album][:title]).to eq('8th Mile')
     end
 
     it 'sets a rating for the album' do
@@ -57,14 +57,14 @@ describe V1::AlbumsController, type: :request do
           headers: headers
 
       expect(response).to have_http_status(:ok)
-      expect(json[:data][:rating_score]).to eq('good')
+      expect(json[:rating][:rating_score]).to eq('good')
     end
 
     it 'gets all album created' do
       get '/v1/albums', headers: headers
 
       expect(response).to have_http_status(:ok)
-      expect(json[:data].length).to eq 1
+      expect(json[:albums].length).to eq 1
     end
 
     it 'deletes a album by an admin' do

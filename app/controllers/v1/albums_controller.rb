@@ -6,36 +6,34 @@ module V1
     def index
       @albums = Album.all
 
-      render custom_success_response(data: @albums)
+      custom_success_response(@albums, status: :ok)
     end
 
     def create
       @album = Album.save_album(album_params)
 
-      return render custom_error(message: 'An Error occurred while creating the album') if @album.nil?
+      return render server_error if @album.nil?
 
-      render custom_success_response(status: :created, data: @album)
+      custom_success_response(@album, status: :created)
     end
 
     def show
-      return render json: not_found if @album.nil?
-
-      render custom_success_response(data: @album)
+      custom_success_response(@album, status: :ok)
     end
 
     def update
       if @album.update_attributes(album_params)
-        render custom_success_response(data: @album)
+        custom_success_response(@album, status: :ok)
       else
-        render unprocessable_entity_error
+        unprocessable_entity_error
       end
     end
 
     def destroy
       if @album.destroy
-        render custom_success_response(data: 'Album successfully deleted')
+        custom_success_response(message: 'Album successfully deleted')
       else
-        render unprocessable_entity_error
+        unprocessable_entity_error
       end
     end
 
@@ -50,7 +48,7 @@ module V1
     def find_album_by_slug
       @album = Album.find_by_id(params[:id])
 
-      render json: not_found if @album.nil?
+      not_found if @album.nil?
     end
   end
 end

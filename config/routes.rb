@@ -20,5 +20,6 @@ Rails.application.routes.draw do
         put '/:id/ratings' => 'ratings#edit_ratings_resource'
       end
     end
+    resources :users, only: [:index, :show, :destroy]
   end
 end

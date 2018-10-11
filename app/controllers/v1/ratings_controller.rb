@@ -12,24 +12,24 @@ module V1
       @rating = Rating.update_rating_score(prepare_ratings_object)
 
       if @rating
-        render custom_success_response(data: @rating)
+        custom_success_response(@rating)
       else
-        render custom_error(message: @rating)
+        custom_error(@rating)
       end
     end
 
     def destroy
       @rating = Rating.delete_rating_resource(params[:id])
 
-      return render unprocessable_entity_error if @rating.nil?
+      return unprocessable_entity_error if @rating.nil?
 
-      render custom_success_response(data: 'Rating successfully removed')
+      custom_success_response(data: 'Rating successfully removed')
     end
 
     private
 
     def ratings_params
-      params.require(:rating).permit(:rating_score, :rateable_type, :rateable_id)
+      params.require(:rating).permit(:rating_score, :rateable_type, :rateable_id, :id)
     end
 
     def prepare_ratings_object
