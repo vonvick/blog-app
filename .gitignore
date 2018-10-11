@@ -18,3 +18,4 @@
 .vscode/*
 .idea/*
 .tool-versions
+public/uploads/**/*
