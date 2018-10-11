@@ -21,5 +21,11 @@ module Concerns
         resource_options: resource_option
       }
     end
+
+    def resource_type
+      return 'song' if params[:type] == 'song'
+
+      'image'
+    end
   end
 end
