@@ -7,6 +7,7 @@ end
 
 gem 'active_model_serializers'
 gem 'cancancan'
+gem 'cloudinary'
 gem 'devise_token_auth'
 gem 'dotenv-rails'
 gem 'pg', '>= 0.21.0'
