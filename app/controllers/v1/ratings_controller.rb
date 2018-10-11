@@ -8,7 +8,7 @@ module V1
     before_action :ratings_params, only: [:edit_ratings_resource]
 
     def edit_ratings_resource
-      authorize! :rate, params[:rating][:rateable_type].to_sym
+      # authorize! :rate, params[:rating][:rateable_type].to_sym
       @rating = Rating.update_rating_score(prepare_ratings_object)
 
       return custom_error(@rating) unless @rating

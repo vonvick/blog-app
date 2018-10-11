@@ -1,7 +1,9 @@
 module V1
   class AlbumsController < ApplicationController
+    include Concerns::Uploads
+
     load_and_authorize_resource class: 'Album'
-    before_action :find_album_by_slug, only: [:show, :update, :destroy]
+    before_action :find_album_by_slug, only: [:show, :update, :destroy, :perform_upload]
 
     def index
       @albums = Album.all
@@ -22,15 +24,32 @@ module V1
     end
 
     def update
-      return unprocessable_entity_error unless @album.update_attributes(album_params)
+      update_album = @album.update_attributes!(album_params)
 
-      custom_success_response(@album, status: :ok)
+      return custom_success_response(@album) if update_album
+
+      unprocessable_entity_error
     end
 
     def destroy
       return unprocessable_entity_error unless @album.destroy
 
       custom_success_response(message: 'Album successfully deleted')
+    end
+
+    def perform_upload
+      delete_image
+      album_image = upload_file
+
+      return custom_error({ message: 'Upload did not succeed, try again!' }, status: 500) unless album_image
+
+      @album.update_attributes(
+        image_url: album_image['url'], image_public_id: album_image['public_id']
+      )
+
+      return unprocessable_entity_error unless @album
+
+      custom_success_response(@album)
     end
 
     private
@@ -45,6 +64,18 @@ module V1
       @album = Album.find_by_id(params[:id])
 
       not_found if @album.nil?
+    end
+
+    def delete_image
+      delete_file if @album.image_url.present?
+    end
+
+    def resource_option
+      @album
+    end
+
+    def url
+      params[:image_url]
     end
   end
 end

@@ -7,7 +7,7 @@ class UserSerializer < ActiveModel::Serializer
              :uid,
              :description,
              :headline,
-             :image_url,
+             :avatar,
              :created_at,
              :updated_at
 

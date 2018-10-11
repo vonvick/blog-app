@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181009165330) do
+ActiveRecord::Schema.define(version: 20181011204814) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(version: 20181009165330) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image_url"
+    t.string "image_public_id"
     t.index ["user_id"], name: "index_albums_on_user_id"
   end
 
@@ -32,6 +34,8 @@ ActiveRecord::Schema.define(version: 20181009165330) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image_url"
+    t.string "playlist_public_id"
     t.index ["user_id"], name: "index_playlists_on_user_id"
   end
 
@@ -70,6 +74,10 @@ ActiveRecord::Schema.define(version: 20181009165330) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image_url"
+    t.string "image_public_id"
+    t.string "song_public_id"
+    t.string "song_url"
     t.index ["album_id"], name: "index_songs_on_album_id"
     t.index ["user_id"], name: "index_songs_on_user_id"
   end
@@ -79,7 +87,7 @@ ActiveRecord::Schema.define(version: 20181009165330) do
     t.string "last_name"
     t.string "email"
     t.string "username"
-    t.string "image_url"
+    t.string "avatar"
     t.text "description"
     t.string "headline"
     t.bigint "role_id"
@@ -98,6 +106,7 @@ ActiveRecord::Schema.define(version: 20181009165330) do
     t.json "tokens"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image_public_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["role_id"], name: "index_users_on_role_id"
