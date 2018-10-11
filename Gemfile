@@ -12,7 +12,7 @@ gem 'devise_token_auth'
 gem 'dotenv-rails'
 gem 'pg', '>= 0.21.0'
 gem 'puma', '>= 3.11'
-gem 'rails', '>= 5.1.0'
+gem 'rails', '<= 5.1.0'
 gem 'rack-cors'
 gem 'rubocop-rspec'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
