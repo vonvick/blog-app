@@ -25,6 +25,7 @@ class Ability
     can [:create, :change, :delete], Playlist, owner: user
     can [:delete], Rating, created_by: user
     can :rate, :item if user.role?
+    can [:see, :update], User, id: user.id
   end
 
   def to_list

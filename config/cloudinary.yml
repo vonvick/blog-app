@@ -1,0 +1,12 @@
+production:
+  cloud_name: <%= ENV['CLOUDINARY_CLOUD_NAME'] %>
+  api_key: <%= ENV['CLOUDINARY_API_KEY'] %>
+  api_secret: <%= ENV['CLOUDINARY_API_SECRET'] %>
+  secure: <%= ENV['CLOUDINARY_SECURE'] %>
+  cdn_subdomain: <%= ENV['CLOUDINARY_PRIVATE_CDN'] %>
+development:
+  cloud_name: <%= ENV['CLOUDINARY_CLOUD_NAME'] %>
+  api_key: <%= ENV['CLOUDINARY_API_KEY'] %>
+  api_secret: <%= ENV['CLOUDINARY_API_SECRET'] %>
+  secure: <%= ENV['CLOUDINARY_SECURE'] %>
+  cdn_subdomain: <%= ENV['CLOUDINARY_PRIVATE_CDN'] %>
