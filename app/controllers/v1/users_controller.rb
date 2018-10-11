@@ -14,11 +14,9 @@ module V1
     end
 
     def destroy
-      if @user.destroy
-        custom_success_response(data: 'User successfully deleted')
-      else
-        unprocessable_entity_error
-      end
+      return unprocessable_entity_error unless @user.destroy
+
+      custom_success_response(data: 'User successfully deleted')
     end
 
     private

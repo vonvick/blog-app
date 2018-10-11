@@ -23,11 +23,9 @@ module V1
     end
 
     def update
-      if @playlist.update_attributes(playlist_params)
-        custom_success_response(@playlist)
-      else
-        unprocessable_entity_error
-      end
+      return unprocessable_entity_error unless @playlist.update_attributes(playlist_params)
+
+      custom_success_response(@playlist)
     end
 
     def destroy

@@ -23,19 +23,15 @@ module V1
     end
 
     def update
-      if @song.update_attributes(song_params)
-        custom_success_response(@song)
-      else
-        unprocessable_entity_error
-      end
+      return unprocessable_entity_error unless @song.update_attributes(song_params)
+
+      custom_success_response(@song)
     end
 
     def destroy
-      if @song.destroy
-        custom_success_response(message: 'Song successfully deleted')
-      else
-        unprocessable_entity_error
-      end
+      return unprocessable_entity_error unless @song.destroy
+
+      custom_success_response(message: 'Song successfully deleted')
     end
 
     private

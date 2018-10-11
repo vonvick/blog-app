@@ -22,19 +22,15 @@ module V1
     end
 
     def update
-      if @album.update_attributes(album_params)
-        custom_success_response(@album, status: :ok)
-      else
-        unprocessable_entity_error
-      end
+      return unprocessable_entity_error unless @album.update_attributes(album_params)
+
+      custom_success_response(@album, status: :ok)
     end
 
     def destroy
-      if @album.destroy
-        custom_success_response(message: 'Album successfully deleted')
-      else
-        unprocessable_entity_error
-      end
+      return unprocessable_entity_error unless @album.destroy
+
+      custom_success_response(message: 'Album successfully deleted')
     end
 
     private
