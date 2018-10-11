@@ -52,7 +52,7 @@ describe V1::SongsController, type: :request do
           headers: headers
 
       expect(response).to have_http_status(:ok)
-      expect(json[:data][:title]).to eq('joromi')
+      expect(json[:song][:title]).to eq('joromi')
     end
 
     it 'sets a rating for the song' do
@@ -60,17 +60,15 @@ describe V1::SongsController, type: :request do
           params: { rating: { rating_score: 3, rateable_id: new_song.id, rateable_type: 'song' } }.to_json,
           headers: headers
 
-      # binding.pry
-
       expect(response).to have_http_status(:ok)
-      expect(json[:data][:rating_score]).to eq('good')
+      expect(json[:rating][:rating_score]).to eq('good')
     end
 
     it 'gets all songs created' do
       get '/v1/songs', headers: headers
 
       expect(response).to have_http_status(:ok)
-      expect(json[:data].length).to eq 1
+      expect(json[:songs].length).to eq 1
     end
 
     it 'deletes a song by an admin' do

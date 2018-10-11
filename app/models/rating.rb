@@ -29,7 +29,7 @@ class Rating < ApplicationRecord
 
       rating.rating_score = rating_object[:rating_score]
       rating.created_by = rating_object[:created_by]
-      rating.rateable = rating_object[:rateable_type]
+      rating.rateable = rating_object[:rateable]
       rating.save
 
       rating

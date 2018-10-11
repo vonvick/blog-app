@@ -7,37 +7,31 @@ module V1
     def index
       @songs = Song.all
 
-      render custom_success_response(data: @songs)
+      custom_success_response(@songs)
     end
 
     def create
       @song = Song.save_song(song_params)
 
-      return render custom_error(message: 'Could not create song') if @song.nil?
+      return custom_error(message: 'Could not create song') if @song.nil?
 
-      render custom_success_response(status: :created, data: @song)
+      custom_success_response(@song, status: :created)
     end
 
     def show
-      return render json: not_found if @song.nil?
-
-      render custom_success_response(data: @song) if @song.present?
+      custom_success_response(@song)
     end
 
     def update
-      if @song.update_attributes(song_params)
-        render custom_success_response(data: @song)
-      else
-        render unprocessable_entity_error
-      end
+      return unprocessable_entity_error unless @song.update_attributes(song_params)
+
+      custom_success_response(@song)
     end
 
     def destroy
-      if @song.destroy
-        render custom_success_response(data: 'Song successfully deleted')
-      else
-        render unprocessable_entity_error
-      end
+      return unprocessable_entity_error unless @song.destroy
+
+      custom_success_response(message: 'Song successfully deleted')
     end
 
     private
@@ -51,7 +45,7 @@ module V1
     def find_song_by_slug
       @song = Song.find_by_id(params[:id])
 
-      render json: not_found if @song.nil?
+      not_found if @song.nil?
     end
 
     def find_album

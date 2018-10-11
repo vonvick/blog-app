@@ -61,27 +61,27 @@ describe V1::PlaylistController, type: :request do
           headers: headers
 
       expect(response).to have_http_status(:ok)
-      expect(json[:data][:title]).to eq('Afro Pop playlist')
+      expect(json[:playlist][:title]).to eq('Afro Pop playlist')
     end
 
     it 'gets all created playlist' do
       get '/v1/playlist/', headers: headers
 
       expect(response).to have_http_status(:ok)
-      expect(json[:data].count).to eq 3
+      expect(json[:playlists].count).to eq 3
     end
 
     it 'gets a playlist' do
       get "/v1/playlist/#{new_playlist.id}", headers: headers
 
       expect(response).to have_http_status(:ok)
-      expect(json[:data][:title]).to eq new_playlist.title
+      expect(json[:playlist][:title]).to eq new_playlist.title
     end
 
     it 'gets all playlist for a particular user' do
       get "/v1/playlist/user/#{user.id}", headers: headers
 
-      expect(json[:data].count).to eq 2
+      expect(json[:playlists].count).to eq 2
     end
 
     it 'adds songs to a playlist' do
@@ -109,7 +109,6 @@ describe V1::PlaylistController, type: :request do
     end
 
     it 'sets a rating for a playlist' do
-      # binding.pry
       put "/v1/playlist/#{third_playlist.id}/ratings",
           params: {
             rating: {
@@ -118,10 +117,8 @@ describe V1::PlaylistController, type: :request do
           }.to_json,
           headers: headers
 
-      # binding.pry
-
       expect(response).to have_http_status(:ok)
-      expect(json[:data][:rating_score]).to eq('good')
+      expect(json[:rating][:rating_score]).to eq('good')
     end
 
     it 'deletes a album by an admin' do

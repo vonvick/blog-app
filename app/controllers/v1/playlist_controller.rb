@@ -7,57 +7,53 @@ module V1
     def index
       @playlist = Playlist.all
 
-      render custom_success_response(data: @playlist)
+      custom_success_response(@playlist)
     end
 
     def create
       @playlist = Playlist.create_playlist(playlist_params)
 
-      return render custom_error(message: 'An Error occurred while creating the playlist') if @playlist.nil?
+      return custom_error(message: 'An Error occurred while creating the playlist') if @playlist.nil?
 
-      render custom_success_response(status: :created, data: @playlist)
+      custom_success_response(@playlist, status: :created)
     end
 
     def show
-      return render json: not_found if @playlist.nil?
-
-      render custom_success_response(data: @playlist)
+      custom_success_response(@playlist)
     end
 
     def update
-      if @playlist.update_attributes(playlist_params)
-        render custom_success_response(data: @playlist)
-      else
-        render unprocessable_entity_error
-      end
+      return unprocessable_entity_error unless @playlist.update_attributes(playlist_params)
+
+      custom_success_response(@playlist)
     end
 
     def destroy
-      return render unprocessable_entity_error unless @playlist.destroy
+      return unprocessable_entity_error unless @playlist.destroy
 
-      render custom_success_response(data: 'playlist successfully deleted')
+      custom_success_response(data: 'playlist successfully deleted')
     end
 
     def user_playlists
       @playlist = Playlist.user_playlist(current_user)
 
-      render custom_success_response(data: @playlist)
+      custom_success_response(@playlist)
     end
 
     def add_songs
       @playlist = Playlist.add_songs_to_playlist(find_associated_songs)
 
-      return render unprocessable_entity_error unless @playlist
+      return unprocessable_entity_error unless @playlist
 
-      render custom_success_response(data: @playlist)
+      custom_success_response(@playlist)
     end
 
     def remove_songs
       @playlist = Playlist.remove_songs_to_playlist(find_associated_songs)
 
-      return render unprocessable_entity_error unless @playlist
+      return unprocessable_entity_error unless @playlist
 
-      render custom_success_response(data: @playlist)
+      custom_success_response(@playlist)
     end
 
     private
@@ -71,13 +67,13 @@ module V1
     def find_playlist_by_slug
       @playlist = Playlist.find_by_id(params[:id])
 
-      render json: not_found if @playlist.nil?
+      not_found if @playlist.nil?
     end
 
     def check_playlist_owner
       playlist_owner = Playlist.owned_by(current_user, params[:id])
 
-      render json: forbidden unless playlist_owner.exists?
+      forbidden(message: 'No playlist for this user yet') unless playlist_owner.exists?
     end
 
     def find_associated_songs
