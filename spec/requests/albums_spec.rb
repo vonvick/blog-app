@@ -45,8 +45,16 @@ describe V1::AlbumsController, type: :request do
     end
 
     it 'updates a album by an admin' do
-      put "/v1/albums/#{new_album.id}", params: { album: { title: '8th Mile' } }.to_json, headers: headers
-
+      put "/v1/albums/#{new_album.id}",
+          params: {
+            album: {
+              title: '8th Mile',
+              description: new_album.description,
+              artist: new_album.artist,
+              year: new_album.year
+            }
+          }.to_json,
+          headers: headers
       expect(response).to have_http_status(:ok)
       expect(json[:album][:title]).to eq('8th Mile')
     end
