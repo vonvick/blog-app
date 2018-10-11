@@ -1,8 +1,10 @@
 module V1
   class PlaylistController < ApplicationController
+    include Concerns::Uploads
+
     load_and_authorize_resource class: 'Playlist'
     before_action :find_playlist_by_slug, only: [:show, :update, :destroy]
-    before_action :check_playlist_owner, only: [:update, :destroy, :add_song, :remove_song]
+    before_action :check_playlist_owner, only: [:update, :destroy, :add_songs, :remove_songs, :upload_images]
 
     def index
       @playlist = Playlist.all
@@ -36,6 +38,21 @@ module V1
 
     def user_playlists
       @playlist = Playlist.user_playlist(current_user)
+
+      custom_success_response(@playlist)
+    end
+
+    def upload_images
+      delete_image
+      playlist_image = upload_file
+
+      return custom_error({ message: 'Upload did not succeed, try again!' }, status: 500) unless playlist_image
+
+      @playlist.update_attributes(
+        image_url: playlist_image['url'], image_public_id: playlist_image['public_id']
+      )
+
+      return unprocessable_entity_error unless @playlist
 
       custom_success_response(@playlist)
     end
@@ -83,6 +100,18 @@ module V1
         id: params[:id],
         songs: songs
       }
+    end
+
+    def delete_image
+      delete_file if @playlist.image_url.present?
+    end
+
+    def resource_option
+      @playlist
+    end
+
+    def url
+      params[:image_url]
     end
   end
 end

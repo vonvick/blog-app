@@ -1,7 +1,9 @@
 module V1
   class SongsController < ApplicationController
+    include Concerns::Uploads
+
     load_and_authorize_resource class: 'Song'
-    before_action :find_song_by_slug, only: [:show, :update, :destroy]
+    before_action :find_song_by_id, only: [:show, :update, :destroy, :perform_upload]
     before_action :find_album, only: [:create, :update]
 
     def index
@@ -34,6 +36,19 @@ module V1
       custom_success_response(message: 'Song successfully deleted')
     end
 
+    def perform_upload
+      delete_item
+      song_resource = upload_file
+
+      return custom_error({ message: 'Upload did not succeed, try again!' }, status: 500) unless song_resource
+
+      @song.update_attributes(update_payload(song_resource))
+
+      return unprocessable_entity_error unless @song
+
+      custom_success_response(@song)
+    end
+
     private
 
     def song_params
@@ -42,7 +57,7 @@ module V1
         .merge(created_by: current_user, album: find_album)
     end
 
-    def find_song_by_slug
+    def find_song_by_id
       @song = Song.find_by_id(params[:id])
 
       not_found if @song.nil?
@@ -50,6 +65,32 @@ module V1
 
     def find_album
       Album.find_by_id(params[:song][:album_id])
+    end
+
+    def delete_item
+      delete_file if @song["#{params[:type]}_url"].present?
+    end
+
+    def resource_option
+      @song
+    end
+
+    def url
+      url_param
+    end
+
+    def url_param
+      return params[:image_url] if params[:type] == 'image'
+
+      params[:song_url]
+    end
+
+    def update_payload(resource)
+      if params[:type] == 'image'
+        { image_url: resource['url'], image_public_id: resource['public_id'] }
+      else
+        { song_url: resource['url'], song_public_id: resource['public_id'] }
+      end
     end
   end
 end
