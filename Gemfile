@@ -9,9 +9,9 @@ gem 'active_model_serializers'
 gem 'cancancan'
 gem 'devise_token_auth'
 gem 'dotenv-rails'
-gem 'pg'
-gem 'puma', '~> 3.11'
-gem 'rails', '~> 5.1.0'
+gem 'pg', '>= 0.21.0'
+gem 'puma', '>= 3.11'
+gem 'rails', '>= 5.1.0'
 gem 'rack-cors'
 gem 'rubocop-rspec'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
@@ -26,7 +26,7 @@ group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'mailcatcher'
   gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'spring-watcher-listen', '>= 2.0.0'
   gem 'web-console', '>= 3.3.0'
 end
 
@@ -34,6 +34,6 @@ group :test do
   gem 'database_cleaner'
   gem 'factory_bot'
   gem 'faker'
-  gem 'rspec-rails', '~> 3.8'
-  gem 'shoulda-matchers', '~> 3.1'
+  gem 'rspec-rails', '>= 3.8'
+  gem 'shoulda-matchers', '>= 3.1'
 end
