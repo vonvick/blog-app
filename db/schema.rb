@@ -10,10 +10,52 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181004203623) do
+ActiveRecord::Schema.define(version: 20181011204814) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "albums", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.string "artist"
+    t.integer "year"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "image_url"
+    t.string "image_public_id"
+    t.index ["user_id"], name: "index_albums_on_user_id"
+  end
+
+  create_table "playlists", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "image_url"
+    t.string "playlist_public_id"
+    t.index ["user_id"], name: "index_playlists_on_user_id"
+  end
+
+  create_table "playlists_songs", id: false, force: :cascade do |t|
+    t.bigint "song_id", null: false
+    t.bigint "playlist_id", null: false
+    t.index ["playlist_id", "song_id"], name: "index_playlists_songs_on_playlist_id_and_song_id"
+    t.index ["song_id", "playlist_id"], name: "index_playlists_songs_on_song_id_and_playlist_id"
+  end
+
+  create_table "ratings", force: :cascade do |t|
+    t.integer "rating_score"
+    t.string "rateable_type"
+    t.bigint "rateable_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["rateable_type", "rateable_id"], name: "index_ratings_on_rateable_type_and_rateable_id"
+    t.index ["user_id"], name: "index_ratings_on_user_id"
+  end
 
   create_table "roles", force: :cascade do |t|
     t.string "title"
@@ -22,12 +64,30 @@ ActiveRecord::Schema.define(version: 20181004203623) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "songs", force: :cascade do |t|
+    t.string "title"
+    t.integer "track"
+    t.string "artist"
+    t.string "genre"
+    t.integer "play_count", default: 0
+    t.bigint "album_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "image_url"
+    t.string "image_public_id"
+    t.string "song_public_id"
+    t.string "song_url"
+    t.index ["album_id"], name: "index_songs_on_album_id"
+    t.index ["user_id"], name: "index_songs_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
     t.string "email"
     t.string "username"
-    t.string "image_url"
+    t.string "avatar"
     t.text "description"
     t.string "headline"
     t.bigint "role_id"
@@ -43,19 +103,20 @@ ActiveRecord::Schema.define(version: 20181004203623) do
     t.datetime "last_sign_in_at"
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
-    t.string "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.string "unconfirmed_email"
     t.json "tokens"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.string "image_public_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["role_id"], name: "index_users_on_role_id"
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "albums", "users"
+  add_foreign_key "playlists", "users"
+  add_foreign_key "ratings", "users"
+  add_foreign_key "songs", "albums"
+  add_foreign_key "songs", "users"
   add_foreign_key "users", "roles"
 end

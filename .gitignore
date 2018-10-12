@@ -16,3 +16,6 @@
 .byebug_history
 .env
 .vscode/*
+.idea/*
+.tool-versions
+public/uploads/**/*

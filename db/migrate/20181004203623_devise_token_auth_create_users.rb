@@ -10,7 +10,7 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration[5.1]
       t.string   :image_url
       t.text     :description
       t.string   :headline
-      t.references :role, foreign_key: true
+      t.references :role, foreign_key: true, default: 3
 
       ## Required
       t.string :provider, :null => false, :default => "email"
@@ -34,11 +34,11 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration[5.1]
       t.string   :current_sign_in_ip
       t.string   :last_sign_in_ip
 
-      ## Confirmable
-      t.string   :confirmation_token
-      t.datetime :confirmed_at
-      t.datetime :confirmation_sent_at
-      t.string   :unconfirmed_email # Only if using reconfirmable
+      # ## Confirmable
+      # t.string   :confirmation_token
+      # t.datetime :confirmed_at
+      # t.datetime :confirmation_sent_at
+      # t.string   :unconfirmed_email # Only if using reconfirmable
 
       ## Lockable
       # t.integer  :failed_attempts, :default => 0, :null => false # Only if lock strategy is :failed_attempts
@@ -54,7 +54,7 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration[5.1]
     add_index :users, :email,                unique: true
     add_index :users, [:uid, :provider],     unique: true
     add_index :users, :reset_password_token, unique: true
-    add_index :users, :confirmation_token,   unique: true
+    # add_index :users, :confirmation_token,   unique: true
     # add_index :users, :unlock_token,       unique: true
   end
 end

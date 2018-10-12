@@ -1,23 +1,18 @@
 FactoryBot.define do
   factory :role do
-    trait :super_admin do
-      title { 'super_admin' }
-      rank { 1 }
-    end
-
     trait :admin do
       title { 'admin' }
-      rank { 2 }
+      rank { 1 }
     end
 
     trait :moderator do
       title { 'moderator' }
-      rank { 3 }
+      rank { 2 }
     end
 
-    trait :user do
+    trait :user_role do
       title { 'user' }
-      rank { 4 }
+      rank { 3 }
     end
   end
 end
