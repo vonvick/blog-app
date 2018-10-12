@@ -4,7 +4,7 @@ cache:
 services:
 - postgresql
 before_script:
-- psql -c 'create database music-library_test;' -U postgres
+- psql -c 'create database music_library_test;' -U postgres
 - bundle exec rake db:create
 - bundle exec rake db:migrate
 deploy:
