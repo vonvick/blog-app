@@ -4,7 +4,7 @@ module Concerns
     extend ActiveSupport::Concern
 
     def common_response(type = nil)
-      return custom_response if type.blank?
+      return custom_success_response(message: 'Operation successful') if type.blank?
 
       send(type.to_s.to_sym)
     end
