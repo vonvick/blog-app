@@ -3,7 +3,8 @@ module V1
     include Concerns::Uploads
 
     load_and_authorize_resource class: 'Song'
-    before_action :find_song_by_id, only: [:show, :update, :destroy, :perform_upload]
+    skip_authorize_resource only: [:update_play_count]
+    before_action :find_song_by_id, only: [:show, :update, :destroy, :perform_upload, :update_play_count]
     before_action :find_album, only: [:create, :update]
 
     def index
@@ -34,6 +35,12 @@ module V1
       return unprocessable_entity_error unless @song.destroy
 
       custom_success_response(message: 'Song successfully deleted')
+    end
+
+    def update_play_count
+      return unprocessable_entity_error unless @song.increment!(play_count: +1)
+
+      custom_success_response(message: 'Song count updated')
     end
 
     def perform_upload

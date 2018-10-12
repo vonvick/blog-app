@@ -1,0 +1,13 @@
+language: ruby
+cache:
+- bundler
+before_script:
+- bundle exec rake db:create
+- bundle exec rake db:migrate
+deploy:
+  provider: heroku
+  api_key:
+    secure: "pQdKhNYYvVoES3+rdj92wzzYU9yzmwG1Y/6z8VzfwDn2rHhFPbVQ04seysTN23zxWFrsKEqCE3DxeB0hOFCKL5CiEvI/DQsZzboYS8+Y/TcEeP21B7Ao4mI3I1JfLTjIMybUOsHTUMeNbJ2GdfLXjQ8eO43pGkPmpke8enbU34EEN62h7oLXyB7IPSB8yjJEHgTe5pWIsI5BlvpPwZtgWdmoq9rYwby3+aRV0El5UMOd/W//Xb0UKuzSL8xdDX0UuqH+prPnTOfPowCW6IBdiBfHGq5qtAn9pnrwm1+8KVV6a2lHG6I2HcNR4vWNR4FhkqMh+wka66FwyacU61ceKyWV4JD3yfM5VZxzaoJNLtT9EIc3iCvjes9qUPPFfg+c2WjQ2r0XMUe6xPccVlJmZ0645mN/pXAZThI0n6GF929XmheKZrEwRqYjA0vVNxV+SIxVvcmQfKjx2zfqIbJI7dLaTKpUMtZcQUGOtiRGn1jFhnIjXW9KXEk5078JyrYPYhtj80JPvFu+nJukbu68bW+aud5e2ew1tNERrHl70Ssa5aQR4aTCy8viahMZuROJv40oH4Hw5dTPFRG/7pasST8zqdFN8c/Dv+eeEa9s/4hqqRy3IDHiH+yE+d/Quslsbc+9Mj9hvYimCRzzcwb9jQSV5uLLex5EfSHbEdRg3cA="
+  app: music-library-app
+  on:
+    repo: vonvick/music-library
