@@ -1,24 +1,13 @@
-# README
+## README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is the repository for music-app-library API. To get the API up and running, you need to
 
-Things you may want to cover:
+- Create a cloudinary account and copy the config keys to the `.env` file
+- Create a `.env` file and copy the content of the `.env.sample` file there and put actual values.
+- start the app with the following command `rails s` locally or just push to heroku to deploy it with the config vars
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+#### TODO
+- Integrate `song-favoriting` feature.
+- Add ability to share music.
+- Add the ability to follow other users and share playlist.
+- Subscription handling
