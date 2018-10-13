@@ -71,6 +71,14 @@ describe V1::SongsController, type: :request do
       expect(json[:songs].length).to eq 1
     end
 
+    it 'updates the song count when the user plays the song' do
+      put "/v1/songs/#{new_song.id}/play_count",
+          headers: headers
+
+      expect(response).to have_http_status(:ok)
+      expect(json[:message]).to eq('Song count updated')
+    end
+
     it 'deletes a song by an admin' do
       delete "/v1/songs/#{new_song.id}", headers: headers
 

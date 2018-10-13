@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       collection do
         put '/:song_id/:rateable_type/ratings' => 'ratings#edit_ratings_resource'
         put '/:id/upload/:type' => 'songs#perform_upload'
+        put '/:id/play_count' => 'songs#update_play_count'
       end
     end
     resources :ratings, only: [:destroy]
