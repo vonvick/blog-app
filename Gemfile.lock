@@ -141,6 +141,8 @@ GEM
       pry (>= 0.10.4)
     puma (3.12.0)
     rack (2.0.5)
+    rack-attack (5.4.1)
+      rack (>= 1.0, < 3)
     rack-cors (1.0.2)
     rack-protection (2.0.4)
       rack
@@ -266,24 +268,25 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_model_serializers
+  active_model_serializers (~> 0.10.7)
   byebug
-  cancancan
-  cloudinary
-  database_cleaner
+  cancancan (~> 2.3.0)
+  cloudinary (~> 1.9.1)
+  database_cleaner (~> 1.7.0)
   devise_token_auth
   dotenv-rails
-  factory_bot
-  faker
+  factory_bot (~> 4.11.1)
+  faker (~> 1.9.1)
   listen (>= 3.0.5, < 3.2)
-  mailcatcher
-  pg
+  mailcatcher (~> 0.2.4)
+  pg (~> 1.1.3)
   pry-rails
   puma (~> 3.11)
-  rack-cors
+  rack-attack (~> 5.4.1)
+  rack-cors (~> 1.0.2)
   rails (~> 5.1.0)
   rspec-rails (~> 3.8)
-  rubocop-rspec
+  rubocop-rspec (~> 1.30.0)
   shoulda-matchers (~> 3.1)
   spring
   spring-watcher-listen (~> 2.0.0)
