@@ -4,6 +4,7 @@ class Album < ApplicationRecord
   has_many :songs
 
   validates_presence_of :title, :description, :artist, :year
+  validates :year, numericality: { only_integer: true }, length: { is: 4 }
 
   class << self
     def save_album(params)

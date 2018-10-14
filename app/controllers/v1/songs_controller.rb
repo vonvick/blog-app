@@ -38,7 +38,7 @@ module V1
     end
 
     def update_play_count
-      return unprocessable_entity_error unless @song.increment!(play_count: +1)
+      return unprocessable_entity_error unless @song.update_play_count
 
       custom_success_response(message: 'Song count updated')
     end

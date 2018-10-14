@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   has_many :songs, foreign_key: 'user_id'
 
   before_create :default_role
+  before_validation :assign_uid
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -14,8 +15,23 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   include DeviseTokenAuth::Concerns::User
 
-  validates_presence_of :first_name, :last_name, :username, :email, :uid
+  validates_presence_of :first_name, :last_name, :username, :email
   validates_uniqueness_of :email, :username
+  validates :first_name, :last_name, :username, length: { minimum: 2 }
+  validates :description, length: { maximum: 500 }
+  validates :password, length: { in: 6..20 }
+  validates :email, format: { with: /\A[^@\s]+@[^@\s]+\.[^@\s]+\z/ }
+  validate :same_as_email?
+  validates_associated :playlists
+
+
+  def same_as_email?
+    errors.add(:uid, 'must match email') unless uid == email
+  end
+
+  def assign_uid
+    self.uid = email
+  end
 
   def role?
     role.title
