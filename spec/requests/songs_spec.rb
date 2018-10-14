@@ -67,6 +67,7 @@ describe V1::SongsController, type: :request do
     it 'gets all songs created' do
       get '/v1/songs', headers: headers
 
+      # binding.pry
       expect(response).to have_http_status(:ok)
       expect(json[:songs].length).to eq 1
     end
