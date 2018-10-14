@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/vonvick/music-library.svg?branch=develop)](https://travis-ci.org/vonvick/music-library)
 ## README
 
 This is the repository for music-app-library API. To get the API up and running, you need to

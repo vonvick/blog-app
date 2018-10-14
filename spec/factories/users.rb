@@ -1,3 +1,4 @@
+# email = Faker::Internet.email
 FactoryBot.define do
   factory :user do
     first_name { Faker::Name.first_name }
@@ -5,7 +6,7 @@ FactoryBot.define do
     email { Faker::Internet.email }
     password { Faker::Internet.password }
     username { Faker::Internet.username }
-    uid { Faker::Internet.email }
+    # uid { Faker::Internet.email }
     association :role
   end
 end

@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(version: 20181011204814) do
     t.string "avatar"
     t.text "description"
     t.string "headline"
-    t.bigint "role_id"
+    t.bigint "role_id", default: 3
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
     t.string "encrypted_password", default: "", null: false

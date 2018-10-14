@@ -6,6 +6,13 @@ class Song < ApplicationRecord
 
   validates_presence_of :title, :track, :artist, :genre, :play_count
 
+  def update_play_count
+    self.play_count += 1
+    save
+
+    self
+  end
+
   class << self
     def save_song(params)
       new_song = new(params)
