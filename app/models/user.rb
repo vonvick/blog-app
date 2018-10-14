@@ -24,7 +24,6 @@ class User < ActiveRecord::Base
   validate :same_as_email?
   validates_associated :playlists
 
-
   def same_as_email?
     errors.add(:uid, 'must match email') unless uid == email
   end

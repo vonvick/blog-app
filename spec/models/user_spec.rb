@@ -12,10 +12,11 @@ RSpec.describe User, type: :model do
   it { is_expected.to validate_presence_of(:password) }
 
   describe 'validating fields' do
-    subject {
-      described_class.new(first_name: 'John', last_name: 'Samuel', username: 'vonj', email: 'john.samuel@mail.com',
-                          uid: 'john.samuel@mail.com', password: 'uirekdsfhew', password_confirmation: 'uirekdsfhew')
-    }
+    subject do
+      described_class.new(first_name: 'John', last_name: 'Samuel', username: 'vonj',
+                          email: 'john.samuel@mail.com', uid: 'john.samuel@mail.com',
+                          password: 'uirekdsfhew', password_confirmation: 'uirekdsfhew')
+    end
 
     it 'is valid with valid attributes' do
       expect(subject).to be_valid
