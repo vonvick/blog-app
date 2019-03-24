@@ -23,9 +23,7 @@ module Concerns
     end
 
     def resource_type
-      return 'song' if params[:type] == 'song'
-
-      'image'
+      params[:type] == 'song' ? 'song' : 'image'
     end
   end
 end
